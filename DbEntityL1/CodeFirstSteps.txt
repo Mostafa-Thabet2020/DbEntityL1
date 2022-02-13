@@ -1,0 +1,15 @@
+﻿1. nuget packages manager 
+2. install Microsoft.EntityFrameworkCore.SqlServer.
+3. install Microsoft.EntityFrameworkCore.Tools.
+4. Db Context class.
+5. inhiret from DbContext , note: you should using Microsoft.EntityFrameworkCore;
+6. DbSet for each model
+7. overide for OnConfigration method
+8. connection string.
+9. build for my solution.
+10. open package manager console 
+11. add migration by this commond line=> dotnet ef migrations add migrationName
+12. update database by this commond line=> dotnet ef database update
+
+
+note: you should create your models first. 
