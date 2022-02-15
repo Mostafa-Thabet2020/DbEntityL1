@@ -1,0 +1,7 @@
+﻿Working with entityframe work has two types:
+1.Database first
+that's mean to create database and it's tables from sql server by sql language 
+than create the models that will handle data with the tabls on database
+
+2.Code First
+fint it in steps.txt

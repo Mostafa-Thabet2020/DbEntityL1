@@ -12,6 +12,10 @@ namespace DbEntityL1
     {
         public DbSet<Student> students { get; set; }
         public DbSet<Book> books { get; set; }
+        public DbSet<Nationality> nationalities { get; set; }
+        public DbSet<Teachers> teachers { get; set; }
+
+
         public const string ConnectionString = "Server=(LocalDb)\\MSSQLLocalDB;Database=EntityDb;Trusted_Connection=True";
        // override OnConfigrtion than press tab=> 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

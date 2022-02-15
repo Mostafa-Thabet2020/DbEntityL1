@@ -1,4 +1,5 @@
-﻿using DbEntityL1.Base;
+﻿
+using DbEntityL1.Parent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace DbEntityL1.Models
 {
-    public class Book:Audit
+    public class Teachers:Human
     {
-        public string Name { get; set; }
-        public string Descriptation { get; set; }
+        public Nationality nationality { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using DbEntityL1;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbEntityL1.Migrations
 {
     [DbContext(typeof(EntityDbContext))]
-    partial class EntityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220215175134_SecoundPhase")]
+    partial class SecoundPhase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,9 +39,6 @@ namespace DbEntityL1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LastModified")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -60,19 +59,16 @@ namespace DbEntityL1.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastModified")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("nationalities");
+                    b.ToTable("Nationality");
                 });
 
-            modelBuilder.Entity("DbEntityL1.Models.Student", b =>
+            modelBuilder.Entity("DbEntityL1.Parent.Human", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,12 +82,13 @@ namespace DbEntityL1.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LastModified")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -104,59 +101,22 @@ namespace DbEntityL1.Migrations
 
                     b.HasIndex("nationalityId");
 
-                    b.ToTable("students");
-                });
+                    b.ToTable("Human");
 
-            modelBuilder.Entity("DbEntityL1.Models.Teachers", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("Birthday")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("nationalityId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("nationalityId");
-
-                    b.ToTable("teachers");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Human");
                 });
 
             modelBuilder.Entity("DbEntityL1.Models.Student", b =>
                 {
-                    b.HasOne("DbEntityL1.Models.Nationality", "nationality")
-                        .WithMany("students")
-                        .HasForeignKey("nationalityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasBaseType("DbEntityL1.Parent.Human");
 
-                    b.Navigation("nationality");
+                    b.HasDiscriminator().HasValue("Student");
                 });
 
-            modelBuilder.Entity("DbEntityL1.Models.Teachers", b =>
+            modelBuilder.Entity("DbEntityL1.Parent.Human", b =>
                 {
                     b.HasOne("DbEntityL1.Models.Nationality", "nationality")
-                        .WithMany("teachers")
+                        .WithMany("humens")
                         .HasForeignKey("nationalityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -166,9 +126,7 @@ namespace DbEntityL1.Migrations
 
             modelBuilder.Entity("DbEntityL1.Models.Nationality", b =>
                 {
-                    b.Navigation("students");
-
-                    b.Navigation("teachers");
+                    b.Navigation("humens");
                 });
 #pragma warning restore 612, 618
         }
